@@ -8,5 +8,5 @@ class Argument
     const POST = 'post';
     const COMMENT = 'comment';
 
-    public static $ARGUMENTS = [self::USER, self::POST, self::COMMENT];
+    public static array $ARGUMENTS = [self::USER, self::POST, self::COMMENT];
 }

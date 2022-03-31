@@ -2,6 +2,7 @@
 
 namespace GeekBrains\Blog\Commands;
 
+use GeekBrains\Blog\Exceptions\ArgumentsException;
 use GeekBrains\Blog\Repositories\PostsRepositoryInterface;
 use GeekBrains\Blog\Post;
 
@@ -11,6 +12,9 @@ class CreatePostCommand implements CommandInterface
         private PostsRepositoryInterface $postsRepository
     ) {}
 
+    /**
+     * @throws ArgumentsException
+     */
     public function handle(Arguments $arguments): void
     { 
         $this->postsRepository->save(new Post(
