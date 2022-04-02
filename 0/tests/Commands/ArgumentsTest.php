@@ -1,6 +1,6 @@
 <?php
 
-namespace GeekBrains\Blog\UnitTests\Commands;
+namespace Commands;
 
 use GeekBrains\Blog\Commands\Arguments;
 use GeekBrains\Blog\Exceptions\ArgumentsException;
@@ -8,6 +8,9 @@ use PHPUnit\Framework\TestCase;
 
 class ArgumentsTest extends TestCase
 {
+    /**
+     * @throws ArgumentsException
+     */
     public function testItReturnsArgumentsValueByName(): void
     {
         // Подготовка
@@ -20,6 +23,9 @@ class ArgumentsTest extends TestCase
         $this->assertEquals('some_value', $value);
     }
 
+    /**
+     * @throws ArgumentsException
+     */
     public function testItReturnsValuesAsStrings(): void
     {
         // Создаём объект с числом в качестве значения аргумента
@@ -71,8 +77,9 @@ class ArgumentsTest extends TestCase
     // У теста два агрумента
     // В одном тестовом наборе из провайдера данных два значения
     /**
-    * @dataProvider argumentsProvider
-    */
+     * @dataProvider argumentsProvider
+     * @throws ArgumentsException
+     */
     public function testItConvertsArgumentsToStrings(
         $inputValue,
         $expectedValue

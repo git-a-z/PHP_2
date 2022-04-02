@@ -23,6 +23,9 @@ class SqliteUsersRepository extends SqliteRepository implements UsersRepositoryI
         ]);
     }
 
+    /**
+     * @throws UserNotFoundException
+     */
     public function get(int $id): User
     {
         $statement = $this->connection->prepare(
@@ -36,6 +39,9 @@ class SqliteUsersRepository extends SqliteRepository implements UsersRepositoryI
         return $this->getUser($statement, $id);
     }
 
+    /**
+     * @throws UserNotFoundException
+     */
     public function getByUsername(string $username): User
     {
         $statement = $this->connection->prepare(
@@ -49,6 +55,9 @@ class SqliteUsersRepository extends SqliteRepository implements UsersRepositoryI
         return $this->getUser($statement, $username);
     }
 
+    /**
+     * @throws UserNotFoundException
+     */
     private function getUser(PDOStatement $statement, string $username): User
     {
         $result = $statement->fetch(PDO::FETCH_ASSOC);

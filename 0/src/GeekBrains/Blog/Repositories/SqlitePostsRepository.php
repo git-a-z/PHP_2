@@ -22,6 +22,9 @@ class SqlitePostsRepository extends SqliteRepository implements PostsRepositoryI
         ]);
     }
 
+    /**
+     * @throws PostNotFoundException
+     */
     public function get(int $id): Post
     {
         $statement = $this->connection->prepare(

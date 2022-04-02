@@ -4,6 +4,7 @@ namespace GeekBrains\Blog\Repositories;
 
 use GeekBrains\Blog\User;
 use GeekBrains\Blog\Exceptions\UserNotFoundException;
+use JetBrains\PhpStorm\Pure;
 
 class DummyUsersRepository implements UsersRepositoryInterface
 {
@@ -12,13 +13,16 @@ class DummyUsersRepository implements UsersRepositoryInterface
         // Ничего не делаем
     }
 
+    /**
+     * @throws UserNotFoundException
+     */
     public function get(int $id): User
     {
         // И здесь ничего не делаем
         throw new UserNotFoundException("Not found");
     }
     
-    public function getByUsername(string $username): User
+    #[Pure] public function getByUsername(string $username): User
     {
         // Нас интересует реализация только этого метода
         // Для нашего теста не важно, что это будет за пользователь,
