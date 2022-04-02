@@ -1,12 +1,15 @@
 <?php
 
 use GeekBrains\Blog\Exceptions\AppException;
+use GeekBrains\Blog\Http\Actions\Comment\CreateComment;
 use GeekBrains\Blog\Http\Actions\Posts\CreatePost;
-use GeekBrains\Blog\Http\Actions\Users\FindByUsername;
+use GeekBrains\Blog\Http\Actions\Posts\DeletePost;
 use GeekBrains\Blog\Http\Actions\Posts\FindById;
+use GeekBrains\Blog\Http\Actions\Users\FindByUsername;
 use GeekBrains\Blog\Http\ErrorResponse;
 use GeekBrains\Blog\Http\HttpException;
 use GeekBrains\Blog\Http\Request;
+use GeekBrains\Blog\Repositories\SqliteCommentsRepository;
 use GeekBrains\Blog\Repositories\SqliteUsersRepository;
 use GeekBrains\Blog\Repositories\SqlitePostsRepository;
 
@@ -16,7 +19,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 $request = new Request(
     $_GET,
     $_SERVER,
-// Читаем поток, содержащий тело запроса
+    // Читаем поток, содержащий тело запроса
     file_get_contents('php://input'),
 );
 
@@ -62,10 +65,19 @@ $routes = [
         ),
     ],
     'POST' => [
-        // Добавили новый маршрут
         '/posts/create' => new CreatePost(
             new SqlitePostsRepository(),
             new SqliteUsersRepository()
+        ),
+        '/posts/comment' => new CreateComment(
+            new SqliteCommentsRepository(),
+            new SqlitePostsRepository(),
+            new SqliteUsersRepository()
+        ),
+    ],
+    'DELETE' => [
+        '/posts' => new DeletePost(
+            new SqlitePostsRepository()
         ),
     ],
 ];
