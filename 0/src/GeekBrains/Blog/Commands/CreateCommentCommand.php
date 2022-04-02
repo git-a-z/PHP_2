@@ -2,6 +2,7 @@
 
 namespace GeekBrains\Blog\Commands;
 
+use GeekBrains\Blog\Exceptions\ArgumentsException;
 use GeekBrains\Blog\Repositories\CommentsRepositoryInterface;
 use GeekBrains\Blog\Comment;
 
@@ -11,6 +12,9 @@ class CreateCommentCommand implements CommandInterface
         private CommentsRepositoryInterface $commentsRepository
     ) {}
 
+    /**
+     * @throws ArgumentsException
+     */
     public function handle(Arguments $arguments): void
     { 
         $this->commentsRepository->save(new Comment(
