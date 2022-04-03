@@ -14,6 +14,9 @@ class MemoryUserRepository implements MemoryUserRepositoryInterface
         $this->users[$user->getId()] = $user;
     }
 
+    /**
+     * @throws UserNotFoundException
+     */
     public function get(int $id): User
     {
         if(!in_array($id, array_keys($this->users)))

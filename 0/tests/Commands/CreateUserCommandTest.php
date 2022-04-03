@@ -1,6 +1,6 @@
 <?php
 
-namespace GeekBrains\Blog\UnitTests\Commands;
+namespace Commands;
 
 use GeekBrains\Blog\Commands\Arguments;
 use GeekBrains\Blog\Exceptions\CommandException;
@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class CreateUserCommandTest extends TestCase
 {
-    private function getAnonymUsersRepository(): UsersRepositoryInterface {
+    private function getAnonymousUsersRepository(): UsersRepositoryInterface {
         return new class implements UsersRepositoryInterface 
         {
             public function save(User $user): void {}
@@ -33,6 +33,9 @@ class CreateUserCommandTest extends TestCase
 
     // Проверяем, что команда создания пользователя бросает исключение,
     // если пользователь с таким именем уже существует
+    /**
+     * @throws ArgumentsException
+     */
     public function testItThrowsAnExceptionWhenUserAlreadyExists(): void
     {
         // Создаём объект команды
@@ -52,11 +55,14 @@ class CreateUserCommandTest extends TestCase
     }
 
     // Тест проверяет, что команда действительно требует имя пользователя
+    /**
+     * @throws CommandException
+     */
     public function testItRequiresFirstName(): void
     {
         // $usersRepository - это объект анонимного класса,
         // реализующего контракт UsersRepositoryInterface
-        $usersRepository = $this->getAnonymUsersRepository();
+        $usersRepository = $this->getAnonymousUsersRepository();
 
         // Передаём объект анонимного класса
         // в качестве реализации UsersRepositoryInterface
@@ -71,10 +77,13 @@ class CreateUserCommandTest extends TestCase
     }
 
     // Тест проверяет, что команда действительно требует фамилию пользователя
+    /**
+     * @throws CommandException
+     */
     public function testItRequiresLastName(): void
     {
         // Передаём в конструктор команды объект, возвращаемый нашей функцией
-        $command = new CreateUserCommand($this->getAnonymUsersRepository());
+        $command = new CreateUserCommand($this->getAnonymousUsersRepository());
         $this->expectException(ArgumentsException::class);
         $this->expectExceptionMessage('No such argument: last_name');
         $command->handle(new Arguments([
@@ -86,6 +95,10 @@ class CreateUserCommandTest extends TestCase
     }
 
     // Тест, проверяющий, что команда сохраняет пользователя в репозитории
+    /**
+     * @throws ArgumentsException
+     * @throws CommandException
+     */
     public function testItSavesUserToRepository(): void
     {
         // Создаём объект анонимного класса

@@ -2,6 +2,7 @@
 
 namespace GeekBrains\Blog\Commands;
 
+use GeekBrains\Blog\Exceptions\ArgumentsException;
 use GeekBrains\Blog\Exceptions\UserNotFoundException;
 use GeekBrains\Blog\Exceptions\CommandException;
 use GeekBrains\Blog\Repositories\UsersRepositoryInterface;
@@ -13,6 +14,10 @@ class CreateUserCommand implements CommandInterface
         private UsersRepositoryInterface $usersRepository
     ) {}
 
+    /**
+     * @throws ArgumentsException
+     * @throws CommandException
+     */
     public function handle(Arguments $arguments): void
     { 
         $username = $arguments->get('username');
