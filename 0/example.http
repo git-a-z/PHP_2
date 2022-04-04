@@ -2,7 +2,7 @@
 
 #GET http://127.0.0.1:8000/users/show?username=ivan
 
-#GET http://127.0.0.1:8000/posts/show?id=1
+#GET http://127.0.0.1:8000/posts/show?id=33
 
 #POST http://127.0.0.1:8000/posts/create
 #
@@ -20,4 +20,11 @@
 #"text": "new comment text+"
 #}
 
-DELETE http://127.0.0.1:8000/posts?id=23
+#DELETE http://127.0.0.1:8000/posts?id=28
+
+POST http://127.0.0.1:8000/likes/create
+
+{
+"post_id": "30",
+"user_id": "43"
+}

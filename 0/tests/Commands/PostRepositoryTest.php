@@ -44,6 +44,8 @@ class PostRepositoryTest extends TestCase
             {
                 return $this->called;
             }
+
+            public function delete(int $id): void {}
         };
 
         // Передаём наш мок в команду
