@@ -1,10 +1,12 @@
 <?php
 
-namespace GeekBrains\Blog\UnitTests\Commands;
+namespace Commands;
 
+use GeekBrains\Blog\Commands\DummyLogger;
 use GeekBrains\Blog\Comment;
 use GeekBrains\Blog\Commands\Arguments;
 use GeekBrains\Blog\Commands\CreateCommentCommand;
+use GeekBrains\Blog\Exceptions\ArgumentsException;
 use GeekBrains\Blog\Exceptions\CommentNotFoundException;
 use GeekBrains\Blog\Repositories\CommentsRepositoryInterface;
 use GeekBrains\Blog\Repositories\SqliteCommentsRepository;
@@ -13,6 +15,9 @@ use PHPUnit\Framework\TestCase;
 class CommentRepositoryTest extends TestCase
 {
     // Тест, проверяющий, что команда сохраняет комментарий в репозитории
+    /**
+     * @throws ArgumentsException
+     */
     public function testItSavesCommentToRepository(): void
     {
         // Создаём объект анонимного класса
@@ -43,7 +48,10 @@ class CommentRepositoryTest extends TestCase
         };
 
         // Передаём наш мок в команду
-        $command = new CreateCommentCommand($commentsRepository);
+        $command = new CreateCommentCommand(
+            $commentsRepository,
+            new DummyLogger()
+        );
 
         // Запускаем команду
         $command->handle(new Arguments([
