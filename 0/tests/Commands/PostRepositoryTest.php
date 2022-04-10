@@ -2,6 +2,7 @@
 
 namespace Commands;
 
+use GeekBrains\Blog\Commands\DummyLogger;
 use GeekBrains\Blog\Exceptions\ArgumentsException;
 use GeekBrains\Blog\Post;
 use GeekBrains\Blog\Commands\Arguments;
@@ -44,10 +45,15 @@ class PostRepositoryTest extends TestCase
             {
                 return $this->called;
             }
+
+            public function delete(int $id): void {}
         };
 
         // Передаём наш мок в команду
-        $command = new CreatePostCommand($postsRepository);
+        $command = new CreatePostCommand(
+            $postsRepository,
+            new DummyLogger()
+        );
 
         // Запускаем команду
         $command->handle(new Arguments([
