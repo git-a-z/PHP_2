@@ -2,6 +2,7 @@
 
 namespace Commands;
 
+use GeekBrains\Blog\Commands\DummyLogger;
 use GeekBrains\Blog\Comment;
 use GeekBrains\Blog\Commands\Arguments;
 use GeekBrains\Blog\Commands\CreateCommentCommand;
@@ -47,7 +48,10 @@ class CommentRepositoryTest extends TestCase
         };
 
         // Передаём наш мок в команду
-        $command = new CreateCommentCommand($commentsRepository);
+        $command = new CreateCommentCommand(
+            $commentsRepository,
+            new DummyLogger()
+        );
 
         // Запускаем команду
         $command->handle(new Arguments([
